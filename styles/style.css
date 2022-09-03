@@ -1,0 +1,17 @@
+.list-styles {
+    list-style: none;
+}
+
+.avater-img {
+
+    width: 30px;
+    border: 1px dashed black;
+}
+
+hr {
+    border: 1px solid black;
+}
+
+.author-img {
+    width: 50px;
+}
