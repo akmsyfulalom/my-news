@@ -9,11 +9,12 @@ const newsCategory = async () => {
 const displayCategories = categories => {
   const categoriesContainer = document.getElementById('categories-container');
   categories.forEach(category => {
-
+    console.log(category)
     const categoriesDiv = document.createElement('div');
+
     // categoriesDiv.classList.add('')
     categoriesDiv.innerHTML = `
-        <a class="navbar-brand" href="#">${category.category_name
+        <a onclick="myPost()" class="navbar-brand" href="#">${category.category_name
       }</a>
         `;
     categoriesContainer.appendChild(categoriesDiv);
@@ -37,7 +38,7 @@ const displayNews = cardPosts => {
     const displayPostDiv = document.createElement('div');
     //    displayPostDiv.classList.add('')
     displayPostDiv.innerHTML = `
-        <div class="card mb-3">
+        <div myPost() class="card mb-3">
   <div class="row g-0">
     <div class="col-3">
       <img src="${cardPost.thumbnail_url}" class="img-fluid rounded-start p-3" alt="...">
@@ -75,10 +76,33 @@ const displayNews = cardPosts => {
 
 
         <div>
-       
-        <a href=""> <i class="fa-solid fa-arrow-right"></i></a>
+        <a type="button" class="register-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-arrow-right"></i> </a>
         </div>
-
+        <div>
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header  d-block">
+                                <h5 class="modal-title" id="staticBackdropLabel">${cardPost.title}
+                                </h5>
+                                
+                                
+                            </div>
+                            <div class="modal-body">
+                            <img class="img-fluid " src="${cardPost.image_url}" alt="">
+                            <p>${cardPost.details}</p>
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				 </div>
+           
+        </div>
         </div>
 
       </div>
@@ -92,5 +116,7 @@ const displayNews = cardPosts => {
 
 
 };
+
+
 
 newsPost()
