@@ -6,26 +6,32 @@ const newsCategory = async () => {
   )
 
 };
-const displayCategories = categories => {
+const displayCategories = (categories) => {
   const categoriesContainer = document.getElementById('categories-container');
+
   categories.forEach(category => {
-    console.log(category)
+
     const categoriesDiv = document.createElement('div');
 
     // categoriesDiv.classList.add('')
     categoriesDiv.innerHTML = `
-        <a onclick="myPost()" class="navbar-brand" href="#">${category.category_name
+        <a onclick="newsPost('${category.category_id}')" class="navbar-brand categories-hovers" href="#">${category.category_name
       }</a>
+      
         `;
+
     categoriesContainer.appendChild(categoriesDiv);
+
   });
 
-};
+
+
+}
 newsCategory()
 
 
-const newsPost = async () => {
-  const url = `https://openapi.programming-hero.com/api/news/category/01`;
+const newsPost = async (eachPost) => {
+  const url = `https://openapi.programming-hero.com/api/news/category/${eachPost}`;
   const res = await fetch(url);
   const postData = await res.json();
   displayNews(postData.data);
@@ -33,35 +39,39 @@ const newsPost = async () => {
 
 const displayNews = cardPosts => {
   const displayPost = document.getElementById('display-news-post');
+  toggleSpninner(true);
+  displayPost.textContent = "";
+
   cardPosts.forEach(cardPost => {
-    console.log(cardPost)
+
     const displayPostDiv = document.createElement('div');
     //    displayPostDiv.classList.add('')
+
     displayPostDiv.innerHTML = `
         <div myPost() class="card mb-3">
   <div class="row g-0">
     <div class="col-3">
-      <img src="${cardPost.thumbnail_url}" class="img-fluid rounded-start p-3" alt="...">
+      <img src="${cardPost.thumbnail_url}" class="img-fluid rounded-start p-3 md-cols-block " alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title">${cardPost.title}</h5>
-        <p class="card-text">${cardPost.details}</p>
+        <p class="card-text">${cardPost.details.slice(0, 600)}</p>
 
         <div class="d-flex justify-content-between">
 
         <div class="d-flex">
         <div>
-        <img class="author-img rounded-circle" src="${cardPost.author.img}" alt="">
+        <img class="author-img rounded-circle" src="${cardPost.author.img ? cardPost.author.img : 'Not'}" alt="">
         </div>
         <div class="ms-3">
-        <p class="fw-bold ">${cardPost.author.name}</p>
-        <p>${cardPost.author.published_date}</p>
+        <p class="fw-bold ">${cardPost.author.name ? cardPost.author.name : 'No name'}</p>
+        <p>${cardPost.author.published_date ? cardPost.author.published_date : 'No date info'}</p>
         </div>
         </div>
 
         <div>
-        <p class="fw-semibold"><i class="fa-regular fa-eye"></i> ${cardPost.total_view}</p>
+        <p class="fw-semibold"><i class="fa-regular fa-eye"></i> ${cardPost.total_view ? cardPost.total_view : 'no views'}</p>
         </div>
 
 
@@ -113,10 +123,30 @@ const displayNews = cardPosts => {
       `;
     displayPost.appendChild(displayPostDiv);
   });
+  const PostFound = document.getElementById('post-found')
 
 
+  for (let i = 0; i < cardPosts.length; i++) {
+
+    PostFound.value = (i + 1) + ' ' + 'items found for category'
+
+  }
+
+
+  toggleSpninner(false);
 };
 
+
+
+const toggleSpninner = isLoading => {
+  const loaderSection = document.getElementById('loader');
+  if (isLoading) {
+    loaderSection.classList.remove('d-none')
+  }
+  else {
+    loaderSection.classList.add('d-none')
+  }
+}
 
 
 newsPost()

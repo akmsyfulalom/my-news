@@ -21,3 +21,28 @@ hr {
 .author-img {
     width: 50px;
 }
+
+.blog-btn {
+    background-color: #4158CA;
+}
+
+.news-btn {
+    background-color: #4158CA;
+
+}
+
+.my-logo {
+    background-color: #4158CA;
+}
+
+.btn-bg {
+    background-color: #5D5FEF;
+}
+
+.categories-hovers {
+    color: #5D5FEF;
+}
+
+.categories-hovers:hover {
+    color: #4158CA;
+}
