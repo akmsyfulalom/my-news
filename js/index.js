@@ -15,43 +15,38 @@ const displayCategories = (categories) => {
 
     // categoriesDiv.classList.add('')
     categoriesDiv.innerHTML = `
-        <a onclick="newsPost('${category.category_id}')" class="navbar-brand categories-hovers" href="#">${category.category_name
-      }</a>
-      
+        <a onclick="newsPost('${category.category_id}')" class="navbar-brand categories-hovers" href="#">${category.category_name}</a>
         `;
-
     categoriesContainer.appendChild(categoriesDiv);
 
   });
-
-
-
 }
+
 newsCategory()
 
 
 const newsPost = async (eachPost) => {
+  loader(true)
   const url = `https://openapi.programming-hero.com/api/news/category/${eachPost}`;
+
   const res = await fetch(url);
   const postData = await res.json();
+
   displayNews(postData.data);
+
 };
 
 const displayNews = cardPosts => {
   const displayPost = document.getElementById('display-news-post');
-  toggleSpninner(true);
+
   displayPost.textContent = "";
-
   cardPosts.forEach(cardPost => {
-
     const displayPostDiv = document.createElement('div');
-    //    displayPostDiv.classList.add('')
-
     displayPostDiv.innerHTML = `
         <div myPost() class="card mb-3">
   <div class="row g-0">
     <div class="col-3">
-      <img src="${cardPost.thumbnail_url}" class="img-fluid rounded-start p-3 md-cols-block " alt="...">
+      <img src="${cardPost.thumbnail_url}" class="img-fluid card-img rounded-start p-3 " alt="...">
     </div>
     <div class="col-md-8">
       <div class="card-body">
@@ -118,35 +113,21 @@ const displayNews = cardPosts => {
       </div>
     </div>
   </div>
-</div>
-      
-      `;
+</div>`;
     displayPost.appendChild(displayPostDiv);
   });
   const PostFound = document.getElementById('post-found')
-
-
   for (let i = 0; i < cardPosts.length; i++) {
-
     PostFound.value = (i + 1) + ' ' + 'items found for category'
-
   }
-
-
-  toggleSpninner(false);
+  loader(false)
 };
-
-
-
-const toggleSpninner = isLoading => {
-  const loaderSection = document.getElementById('loader');
+const loader = isLoading => {
+  const loadContainer = document.getElementById('loadContainer');
   if (isLoading) {
-    loaderSection.classList.remove('d-none')
+    loadContainer.classList.remove('d-none')
   }
   else {
-    loaderSection.classList.add('d-none')
+    loadContainer.classList.add('d-none')
   }
 }
-
-
-newsPost()
