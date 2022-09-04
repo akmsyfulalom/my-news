@@ -1,9 +1,14 @@
 const newsCategory = async () => {
   const url = `https://openapi.programming-hero.com/api/news/categories`
-  const res = await fetch(url);
-  const data = await res.json();
-  displayCategories(data.data.news_category
-  )
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    displayCategories(data.data.news_category
+    );
+  }
+  catch (error) {
+    console.log(error);
+  }
 
 };
 const displayCategories = (categories) => {
@@ -29,11 +34,15 @@ const newsPost = async (eachPost) => {
   loader(true)
   const url = `https://openapi.programming-hero.com/api/news/category/${eachPost}`;
 
-  const res = await fetch(url);
-  const postData = await res.json();
+  try {
+    const res = await fetch(url);
+    const postData = await res.json();
 
-  displayNews(postData.data);
-
+    displayNews(postData.data);
+  }
+  catch (error) {
+    console.log(error);
+  }
 };
 
 const displayNews = cardPosts => {
@@ -43,13 +52,13 @@ const displayNews = cardPosts => {
   cardPosts.forEach(cardPost => {
     const displayPostDiv = document.createElement('div');
     displayPostDiv.innerHTML = `
-        <div myPost() class="card mb-3">
+        <div myPost() class="card mb-3 shadow">
   <div class="row g-0">
     <div class="col-3">
-      <img src="${cardPost.thumbnail_url}" class="img-fluid card-img rounded-start p-3 " alt="...">
+      <img src="${cardPost.thumbnail_url}" class="img-fluid card-img shadow rounded-start p-3 " alt="...">
     </div>
     <div class="col-md-8">
-      <div class="card-body">
+      <div class="card-body ">
         <h5 class="card-title">${cardPost.title}</h5>
         <p class="card-text">${cardPost.details.slice(0, 600)}</p>
 
@@ -81,7 +90,7 @@ const displayNews = cardPosts => {
 
 
         <div>
-        <a type="button" class="register-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-arrow-right"></i> </a>
+        <a type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="fa-solid fa-arrow-right"></i> </a>
         </div>
         <div>
         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
@@ -95,7 +104,7 @@ const displayNews = cardPosts => {
                                 
                             </div>
                             <div class="modal-body">
-                            <img class="img-fluid " src="${cardPost.image_url}" alt="">
+                            <img class="img-fluid card-img" src="${cardPost.image_url}" alt="">
                             <p>${cardPost.details}</p>
                                 
                             </div>
